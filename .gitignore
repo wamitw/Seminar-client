@@ -1,0 +1,7 @@
+client/.project
+client/.cproject
+client/Debug/
+client/.settings/
+
+server/.project
+server/.pydevproject
