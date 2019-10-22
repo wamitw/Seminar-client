@@ -5,3 +5,4 @@ client/.settings/
 
 server/.project
 server/.pydevproject
+server/src/__pycache__/
