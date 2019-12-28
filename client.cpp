@@ -130,9 +130,6 @@ int main (int argc, char **argv) {
 		cout << ">>> ";
 	}
 
-
-	host = "127.0.0.1";
-	port = 8080;
 	cout << endl << endl << "Command is:" << endl << command;
 
 	MySocket s(host, port);
