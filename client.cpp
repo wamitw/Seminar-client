@@ -39,7 +39,6 @@ int main (int argc, char **argv) {
 	}
 
 
-	help();
 
 	command = "";
 	cout << ">>> ";
