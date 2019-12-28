@@ -54,7 +54,10 @@ int main (int argc, char **argv) {
 	cout << endl << endl << "Command is:" << endl << command;
 
 	MySocket s(host, port);
+	cout << "Starting connection..." << endl;
 	s.conn();
+
+	cout << "Connection Established!" << endl << "Sending Message..." << endl;
 	s.sendMsg(command);
 	ans = s.getMsg();
 	cout << "Answer Received!" << endl << ans;
