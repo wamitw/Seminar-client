@@ -8,9 +8,17 @@ int main (int argc, char **argv) {
 	int port;
 	string host;
 	char c;
+	string arguments, command, ans;
+
 	if (argc < 2) {
 		cout << "missing arguments. run --help for help.\n";
 		return 1;
+	}
+
+	arguments = "";
+	for (int i = 1; i < argc; i++) {
+		arguments += argv[i];
+		arguments += " ";
 	}
 
 	command = "";
