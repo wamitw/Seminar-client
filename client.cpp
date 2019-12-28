@@ -43,12 +43,9 @@ int main (int argc, char **argv) {
 
 	command = "";
 	cout << ">>> ";
-	while(cin.get(c)) {
-		if(c == '\n')
-			cout << endl << ">>> ";
-		else
-			cout << c;
-		command += c;
+	while (getline(cin, line)) {
+		command += line + "\n";
+		cout << ">>> ";
 	}
 
 
