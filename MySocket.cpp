@@ -43,3 +43,15 @@ int MySocket::conn(void) {
 	}
 	return 0;
 }
+
+int MySocket::sendMsg(string msg) {
+	int res;
+
+	if ((res = send(fd, msg.c_str(), msg.length(), 0)) < 0) {
+		perror("Error sending message");
+		return res;
+	}
+
+	cout << "Message sent" << "\n";
+	return 0;
+}
