@@ -16,92 +16,50 @@ static void help(void) {
 	cout << "Example: -h 127.0.0.1 -p 8080" << endl;
 }
 
-static string substring(string str, size_t from, size_t to) {
-	if (from >= str.length())
-		return "";
-	if (from > to)
-		to = str.length();
-	return str.substr(from, to - from);
+static void misuse(void) {
+	cout << "Invalid arguments. Run --help for help." << endl;
 }
 
 int main (int argc, char **argv) {
-	int port;
+
+	int part, port = -1;
 	string host;
-	char c;
-	string arguments, command, ans;
+	bool port_expected, host_expected, arg_expected;
+	string arg, line, command, ans;
+
+	smatch match;
+	regex ip("(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})");
 
 	if (argc < 2) {
-		cout << "missing arguments. run --help for help." << endl;
+		misuse();
 		return 1;
 	}
 
-
-	arguments = "";
+	arg_expected = true;
 	for (int i = 1; i < argc; i++) {
-		arguments += argv[i];
-		arguments += " ";
-	}
+		arg = argv[i];
 
-	if ((index = arguments.find('-')) == string::npos) {
-		cout << "missing arguments. run --help for help." << endl;
-		return 1;
-	}
-
-	while (index != string::npos) {
-		next = arguments.find('-', index + 1);
-		/* --argument Case */
-		if (next == index + 1) {
-			index = next;
-			next = arguments.find('-', index + 1);
+		if (arg.compare("--help") == 0) {
+			help();
+			return 0;
 		}
 
-		argument = substring(arguments, index, next);
-
-		space = argument.find(' ');
-		perfix = substring(argument, 1, space);
-		suffix = substring(argument, space + 1, 0);
-
-		if (perfix.compare("help") == 0) {
-			help();
+		if (arg.compare("-p") == 0 || arg.compare("-h") == 0) {
+			if (!arg_expected) {
+				misuse();
+				return 1;
+			}
+			arg_expected = false;
+			port_expected = (arg.compare("-p") == 0 && port == -1);
+			host_expected = (arg.compare("-h") == 0 && host.empty());
+		} else if (arg_expected) {
+			misuse();
 			return 1;
-		} else if (perfix.compare("h") == 0) {
-			cout << "got host: " << suffix << endl;
-
-			if (suffix.empty()) {
-				cout << "but host is already defined. run --help for help."
-						<< endl;
-				return 1;
-			}
-
-			host = suffix;
-			trim(host);
-
-			if (!regex_match(host, match, ip)) {
-				cout << "but host isn't in IP format." << endl;
-				return 1;
-			}
-
-			int length = match.size();
-			for (int i=1; i < length; i++) {
-				int part = stoi(match.str(i));
-				if (part > 255) {
-					cout << "but part of the host(" << part << ") is invalid" << endl;
-					return 1;
-				}
-			}
-
-		} else if (perfix.compare("p") == 0) {
-
-			cout << "got port: " << suffix << endl;
-
-			if (port != -1) {
-				cout << "but port is already defined. run --help for help."
-						<< endl;
-				return 1;
-			}
+		} else if (port_expected) {
+			cout << "got port: " << arg << endl;
 
 			try {
-				port = stoi(suffix);
+				port = stoi(arg);
 			} catch (invalid_argument& e) {
 				cout << "but port isn't a number. run --help for help." << endl;
 				return 1;
@@ -116,13 +74,31 @@ int main (int argc, char **argv) {
 						<< "). run --help for help." << endl;
 				return 1;
 			}
+			port_expected = false;
+			arg_expected = true;
+		} else if (host_expected) {
+			cout << "got host: " << arg << endl;
 
+			host = arg;
+
+			if (!regex_match(host, match, ip)) {
+				cout << "but host isn't in IP format." << endl;
+				return 1;
+			}
+
+			for (uint i=1; i < match.size(); i++) {
+				part = stoi(match.str(i));
+				if (part > 255) {
+					cout << "but part of the host(" << part << ") is invalid" << endl;
+					return 1;
+				}
+			}
+			host_expected = false;
+			arg_expected = true;
 		} else {
-			cout << "arguments error. run --help for help." << endl;
+			misuse();
 			return 1;
 		}
-
-		index = next;
 	}
 
 	command = "";
