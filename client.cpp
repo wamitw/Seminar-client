@@ -13,6 +13,13 @@ static void help(void) {
 	cout << "Example: -h 127.0.0.1 -p 8080" << endl;
 }
 
+static string substring(string str, size_t from, size_t to) {
+	if (from >= str.length())
+		return "";
+	if (from > to)
+		to = str.length();
+	return str.substr(from, to - from);
+}
 
 int main (int argc, char **argv) {
 	int port;
