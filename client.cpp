@@ -3,8 +3,18 @@
 
 using namespace std;
 
-int main (int argc, char **argv) {
+static void help(void) {
+	cout << "RemotePy - A Program to Run Python Commands From Remote" << endl << endl;
+	cout << "Options:" << endl;
+	cout << "--help \t\t show brief help" << endl;
+	cout << "-h \t\t specify an ip to connect to" << endl;
+	cout << "-p \t\t specify a port (default - 8080)" << endl;
+	cout << endl;
+	cout << "Example: -h 127.0.0.1 -p 8080" << endl;
+}
 
+
+int main (int argc, char **argv) {
 	int port;
 	string host;
 	char c;
@@ -20,6 +30,9 @@ int main (int argc, char **argv) {
 		arguments += argv[i];
 		arguments += " ";
 	}
+
+
+	help();
 
 	command = "";
 	cout << ">>> ";
