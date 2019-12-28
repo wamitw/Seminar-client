@@ -21,7 +21,7 @@ int main (int argc, char **argv) {
 	string arguments, command, ans;
 
 	if (argc < 2) {
-		cout << "missing arguments. run --help for help.\n";
+		cout << "missing arguments. run --help for help." << endl;
 		return 1;
 	}
 
@@ -38,22 +38,22 @@ int main (int argc, char **argv) {
 	cout << ">>> ";
 	while(cin.get(c)) {
 		if(c == '\n')
-			cout << "\n" << ">>> ";
+			cout << endl << ">>> ";
 		else
 			cout << c;
 		command += c;
 	}
 
-	cout << "\n\n" << "Command is:" << "\n" << command;
 
 	host = "127.0.0.1";
 	port = 8080;
+	cout << endl << endl << "Command is:" << endl << command;
 
 	MySocket s(host, port);
 	s.conn();
 	s.sendMsg(command);
 	ans = s.getMsg();
-	cout << "Answer Received!" << "\n" << ans;
+	cout << "Answer Received!" << endl << ans;
 
 	return 0;
 }
