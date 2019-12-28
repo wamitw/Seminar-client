@@ -55,3 +55,21 @@ int MySocket::sendMsg(string msg) {
 	cout << "Message sent" << "\n";
 	return 0;
 }
+
+string MySocket::getMsg(void) {
+
+	int status, bytes = 1024;
+	char buffer[bytes];
+	string msg = "";
+
+	while ((status = read(fd, &buffer, bytes)) > 0)
+		msg += buffer;
+
+	if (status == -1) {
+		perror ("Error getting message");
+		return NULL;
+	}
+
+	return msg;
+}
+
