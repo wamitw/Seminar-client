@@ -3,6 +3,7 @@
 #include "MySocket.h"
 
 #define MAX_PORT		(65535)
+
 using namespace std;
 
 static void help(void) {
@@ -33,6 +34,7 @@ int main (int argc, char **argv) {
 		cout << "missing arguments. run --help for help." << endl;
 		return 1;
 	}
+
 
 	arguments = "";
 	for (int i = 1; i < argc; i++) {
