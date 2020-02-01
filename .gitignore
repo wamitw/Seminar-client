@@ -1,8 +1,6 @@
-client/.project
-client/.cproject
-client/Debug/
-client/.settings/
-
-server/.project
-server/.pydevproject
-server/src/__pycache__/
+#CMake files
+CMakeCache.txt
+CMakeFiles/
+Makefile
+client
+cmake_install.cmake
