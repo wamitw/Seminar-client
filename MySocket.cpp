@@ -12,7 +12,7 @@
 
 using namespace std;
 
-MySocket::MySocket(string host, int port) {
+MySocket::MySocket(string host, uint16_t port) {
 	this->host = host;
 	this->port = port;
 	this->fd = -1;
@@ -37,17 +37,17 @@ int MySocket::conn(void) {
 		return res;
 	}
 
-	if ((res = connect(fd, (struct sockaddr *) &serv_addr, sizeof(serv_addr))) < 0) {
+	if ((res = connect(fd, reinterpret_cast<const sockaddr *>(&serv_addr), sizeof(serv_addr))) < 0) {
 		perror("Connection Failed");
 		return res;
 	}
 	return 0;
 }
 
-int MySocket::sendMsg(string msg) {
-	int res;
+size_t MySocket::sendMsg(string msg) {
+	size_t res;
 
-	if ((res = send(fd, msg.c_str(), msg.length(), 0)) < 0) {
+	if ((res = send(fd, msg.c_str(), msg.length(), 0)) == -1UL) {
 		perror("Error sending message");
 		return res;
 	}
@@ -58,14 +58,14 @@ int MySocket::sendMsg(string msg) {
 
 int MySocket::getMsg(std::string &msg) {
 
-	int status, bytes = 1024;
-	char buffer[bytes];
+	size_t status, bytes = 1024;
+	char *buffer = new char[bytes];
 	msg = "";
 
 	while ((status = read(fd, &buffer, bytes)) > 0)
 		msg += buffer;
 
-	if (status == -1) {
+	if (status == -1UL) {
 		perror ("Error getting message");
 		return -1;
 	}

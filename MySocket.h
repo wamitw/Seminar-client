@@ -14,13 +14,14 @@
 class MySocket {
 private:
 	std::string host;
-	int fd, port;
+	int fd;
+	uint16_t port;
 	struct sockaddr_in serv_addr;
 
 public:
-	MySocket(std::string, int);
+	MySocket(std::string host, uint16_t port);
 	int conn(void);
-	int sendMsg(std::string);
+	size_t sendMsg(std::string);
 	int getMsg(std::string &);
 };
 

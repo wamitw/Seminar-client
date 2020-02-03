@@ -22,7 +22,8 @@ static void misuse(void) {
 
 int main (int argc, char **argv) {
 
-	int part, port = -1;
+	int part;
+	uint16_t port = MAX_PORT;
 	string host;
 	bool port_expected, host_expected, arg_expected;
 	string arg, line, command, ans;
@@ -50,7 +51,7 @@ int main (int argc, char **argv) {
 				return 1;
 			}
 			arg_expected = false;
-			port_expected = (arg.compare("-p") == 0 && port == -1);
+			port_expected = (arg.compare("-p") == 0 && port == MAX_PORT);
 			host_expected = (arg.compare("-h") == 0 && host.empty());
 		} else if (arg_expected) {
 			misuse();
@@ -59,7 +60,7 @@ int main (int argc, char **argv) {
 			cout << "got port: " << arg << endl;
 
 			try {
-				port = stoi(arg);
+				port = static_cast<uint16_t>(stoul(arg));
 			} catch (invalid_argument& e) {
 				cout << "but port isn't a number. run --help for help." << endl;
 				return 1;
@@ -69,11 +70,6 @@ int main (int argc, char **argv) {
 				return 1;
 			}
 
-			if (port > MAX_PORT || port <= 0) {
-				cout << "but port isn't an allowed number (1-" << MAX_PORT
-						<< "). run --help for help." << endl;
-				return 1;
-			}
 			port_expected = false;
 			arg_expected = true;
 		} else if (host_expected) {
