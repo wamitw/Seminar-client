@@ -56,20 +56,20 @@ int MySocket::sendMsg(string msg) {
 	return 0;
 }
 
-string MySocket::getMsg(void) {
+int MySocket::getMsg(std::string &msg) {
 
 	int status, bytes = 1024;
 	char buffer[bytes];
-	string msg = "";
+	msg = "";
 
 	while ((status = read(fd, &buffer, bytes)) > 0)
 		msg += buffer;
 
 	if (status == -1) {
 		perror ("Error getting message");
-		return NULL;
+		return -1;
 	}
 
-	return msg;
+	return 0;
 }
 

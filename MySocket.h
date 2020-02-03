@@ -21,7 +21,7 @@ public:
 	MySocket(std::string, int);
 	int conn(void);
 	int sendMsg(std::string);
-	std::string getMsg(void);
+	int getMsg(std::string &);
 };
 
 #endif /* MYSOCKET_H_ */

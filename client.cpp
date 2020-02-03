@@ -116,8 +116,11 @@ int main (int argc, char **argv) {
 
 	cout << "Connection Established!" << endl << "Sending Message..." << endl;
 	s.sendMsg(command);
-	ans = s.getMsg();
-	cout << "Answer Received!" << endl << ans;
+	cout << "Waiting for response..." << endl;
+	if(s.getMsg(ans))
+		cout << "Answer Received!" << endl << ans;
+	else
+		cout << "Error getting message!" << endl;
 
 	return 0;
 }
