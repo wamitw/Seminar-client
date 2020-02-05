@@ -58,11 +58,11 @@ size_t MySocket::sendMsg(string msg) {
 
 int MySocket::getMsg(std::string &msg) {
 
-	size_t status, bytes = 1024;
-	char *buffer = new char[bytes];
+	size_t status;
+	char *buffer = new char[BUFFER_SIZE];
 	msg = "";
 
-	while ((status = read(fd, &buffer, bytes)) > 0)
+	while ((status = read(fd, &buffer, BUFFER_SIZE)) > 0)
 		msg += buffer;
 
 	if (status == -1UL) {

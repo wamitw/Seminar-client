@@ -11,6 +11,8 @@
 #include <arpa/inet.h>
 #include <string>
 
+#define	BUFFER_SIZE				(1024)
+
 class MySocket {
 private:
 	std::string host;
