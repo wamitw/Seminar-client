@@ -1,6 +1,6 @@
 #include <iostream>
 #include <regex>
-#include "MySocket.h"
+#include "MySSLSocket.h"
 
 #define MAX_PORT		(65535)
 
@@ -105,7 +105,7 @@ int main (int argc, char **argv) {
 
 	cout << endl << endl << "Command is:" << endl << command;
 
-	MySocket s(host, port);
+	MySSLSocket s(host, port);
 	cout << "Starting connection..." << endl;
 	rc = s.conn();
 	if (rc) {
