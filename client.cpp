@@ -21,8 +21,7 @@ static void misuse(void) {
 }
 
 int main (int argc, char **argv) {
-
-	int part;
+	int rc, part;
 	uint16_t port = MAX_PORT;
 	string host;
 	bool port_expected, host_expected, arg_expected;
@@ -108,15 +107,26 @@ int main (int argc, char **argv) {
 
 	MySocket s(host, port);
 	cout << "Starting connection..." << endl;
-	s.conn();
+	rc = s.conn();
+	if (rc) {
+		cout << "Error establishing connection with error code " << rc << endl;
+		return rc;
+	}
 
 	cout << "Connection Established!" << endl << "Sending Message..." << endl;
-	s.sendMsg(command);
+	rc = s.sendMsg(command);
+	if (rc) {
+		cout << "Error sending message with error code " << rc << endl;
+		return rc;
+	}
+
 	cout << "Waiting for response..." << endl;
-	if(s.getMsg(ans))
-		cout << "Answer Received!" << endl << ans;
-	else
-		cout << "Error getting message!" << endl;
+	rc = s.getMsg(ans);
+	if(rc) {
+		cout << "Error getting message with error code " << rc << endl;
+		return rc;
+	}
+	cout << "Answer Received!" << endl << ans;
 
 	return 0;
 }

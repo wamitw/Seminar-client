@@ -14,7 +14,7 @@
 #define	BUFFER_SIZE				(1024)
 
 class MySocket {
-private:
+protected:
 	std::string host;
 	int fd;
 	uint16_t port;
