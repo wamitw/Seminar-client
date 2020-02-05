@@ -21,6 +21,7 @@ public:
 	int conn(void);
 	int sendMsg(std::string);
 	int getMsg(std::string &);
+	~MySSLSocket(void);
 };
 
 #endif /* _MYSSLSOCKET_H_ */

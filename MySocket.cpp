@@ -73,3 +73,6 @@ int MySocket::getMsg(std::string &msg) {
 	return 0;
 }
 
+MySocket::~MySocket(void) {
+	close(fd);
+}

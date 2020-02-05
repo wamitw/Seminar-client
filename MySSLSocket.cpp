@@ -5,6 +5,7 @@
  *      Author: amit
  */
 
+#include <unistd.h>
 #include <iostream>
 #include <string>
 #include <cstring>
@@ -92,3 +93,8 @@ int MySSLSocket::getMsg(std::string &msg) {
 	return 0;
 }
 
+MySSLSocket::~MySSLSocket(void) {
+	SSL_free(ssl);
+	close(fd);
+	SSL_CTX_free(ctx);
+}

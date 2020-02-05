@@ -25,6 +25,7 @@ public:
 	int conn(void);
 	size_t sendMsg(std::string);
 	int getMsg(std::string &);
+	~MySocket(void);
 };
 
 #endif /* MYSOCKET_H_ */
